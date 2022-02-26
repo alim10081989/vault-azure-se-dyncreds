@@ -5,8 +5,8 @@ provider "vault" {
 }
 
 resource "azurerm_resource_group" "azure_vault_rg" {
-  name     = "vault-rg"
-  location = "East US"
+  name     = var.resource_group_name
+  location = var.location
 }
 
 resource "vault_azure_secret_backend" "azure" {
