@@ -2,11 +2,11 @@ terraform {
   required_providers {
     vault = {
       source  = "hashicorp/vault"
-      version = "3.3.1"
+      version = "~>3.0"
     }
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "2.98.0"
+      version = "~>3.0"
     }
   }
 }

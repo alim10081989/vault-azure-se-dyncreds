@@ -4,9 +4,13 @@ provider "vault" {
   token              = var.vault_token
 }
 
+resource "random_pet" "rg_name" {
+  prefix = var.resource_group_name_prefix
+}
+
 resource "azurerm_resource_group" "azure_vault_rg" {
-  name     = var.resource_group_name
-  location = var.location
+  location = var.resource_group_location
+  name     = random_pet.rg_name.id
 }
 
 resource "vault_azure_secret_backend" "azure" {
@@ -20,13 +24,13 @@ resource "vault_azure_secret_backend" "azure" {
 
 resource "vault_azure_secret_backend_role" "admin" {
   backend = vault_azure_secret_backend.azure.path
-  role    = "edu-app"
+  role    = "demo-app"
   ttl     = 300
   max_ttl = 600
 
   azure_roles {
     role_name = "Contributor"
-    scope     = "/subscriptions/${var.subscription_id}/resourceGroups/${azurerm_resource_group.azure_vault_rg.name}"
+    scope     = "/subscriptions/${var.subscription_id}"
   }
 }
 
